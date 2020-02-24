@@ -12,4 +12,4 @@ speed: Rotation per minute
 
 * ws_increment_continuous_speedy: Incrementing speed smoothly
 
-* ws_final_server_with_speed: Incrementing speed smoothly and decremting speed smoothly
+* ws_final_server_with_speed: Incrementing speed smoothly and decrementing speed smoothly
