@@ -15,6 +15,8 @@ async def hello(websocket, path):
     prev = 0
     speed = 0
     pre_decay = 0
+    sample_size = 5
+    ns_to_min = 60000000000
 
     while True:
         if (button.is_pressed) and prev == 0:
@@ -22,11 +24,12 @@ async def hello(websocket, path):
             prev = 1
             press_time = now()
             arr.append(press_time)
-            if len(arr) > 5:
+            if len(arr) > sample_size:
                 arr.pop(0);
 
             diff = arr[len(arr) -1] - arr[0]
-            current_speed = (len(arr) * 60* 1000000000) / diff
+            #rotation per minut
+            current_speed = (len(arr) * ns_to_min) / diff
             if step < 40:
                 print("step", step)
                 scaler = (-(1/2)**(step/5 -1) + 2)/2
@@ -37,6 +40,7 @@ async def hello(websocket, path):
             prev = 0
 
         if speed > 1:
+            #decay is the time diff from the last click to current, unit in second
             decay = int((now() - arr[len(arr) - 1])/1000000000)
             if decay > pre_decay:
 #                print("this is decay", decay, "prev", pre_decay)
